@@ -4,9 +4,7 @@ plugins {
 
 android {
     namespace 'msku.ceng.madlab.week6'
-    compileSdk {
-        version = release(36)
-    }
+    compileSdk 36
 
     defaultConfig {
         applicationId "msku.ceng.madlab.week6"
@@ -34,6 +32,7 @@ android {
 }
 
 dependencies {
+
     implementation libs.appcompat
     implementation libs.material
     implementation libs.activity
