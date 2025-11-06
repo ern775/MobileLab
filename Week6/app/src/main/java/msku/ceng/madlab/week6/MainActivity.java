@@ -1,5 +1,8 @@
 package msku.ceng.madlab.week6;
 
+import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -7,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.FragmentTransaction;
+
+import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity implements MovieFragment.onMovieSelected {
 
@@ -24,6 +30,21 @@ public class MainActivity extends AppCompatActivity implements MovieFragment.onM
 
     @Override
     public void movieSelected(Movie movie) {
-
+        int displayMode = getResources().getConfiguration().orientation;
+        if (displayMode == ORIENTATION_PORTRAIT) {
+            Intent intent = new Intent(this, DetailsActivity.class);
+            intent.putExtra("movie", (Serializable) movie);
+            startActivity(intent);
+        } else {
+            DetailsFragment detailsFragment = (DetailsFragment) getSupportFragmentManager().findFragmentByTag("details");
+            if (detailsFragment == null) {
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                detailsFragment = DetailsFragment.newInstance(movie);
+                fragmentTransaction.add(R.id.container, detailsFragment, "details");
+                fragmentTransaction.commit();
+            } else {
+                detailsFragment.setMovie(movie, findViewById(R.id.container));
+            }
+        }
     }
 }
