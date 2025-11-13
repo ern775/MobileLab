@@ -73,4 +73,9 @@ public class MainActivity extends Activity implements BoardView{
                 break;
         }
     }
+
+    @Override
+    public void invalidPlay(byte row, byte col) {
+        Toast.makeText(this, "Invalid Move", Toast.LENGTH_LONG).show();
+    }
 }
